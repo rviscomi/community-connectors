@@ -24,7 +24,7 @@ crux.cacheFlushWhitelist = [
 
 // Query used to pull data from BigQuery
 crux.queryString =
-  "SELECT * FROM `chrome-ux-report.materialized.summary` WHERE origin = @url";
+  "SELECT * FROM `chrome-ux-report.materialized.form_factor_summary` WHERE origin = @url";
 
 function getConfig(request) {
   var customConfig = [
@@ -97,11 +97,21 @@ crux.Schema = [
     }
   },
   {
+    name: "form_factor",
+    label: "Form Factor",
+    description: "The classification of the user's device: desktop, phone, or tablet.",
+    dataType: "STRING",
+    semantics: {
+      conceptType: "DIMENSION",
+      semanticType: "TEXT"
+    }
+  },
+  {
     name: "fast_fcp",
     label: "Fast",
     description: "The percent of First Contentful Paint experiences < 1 second.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -113,7 +123,7 @@ crux.Schema = [
     label: "Average",
     description: "The percent of First Contentful Paint experiences >= 1 second and < 3 seconds.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -125,7 +135,7 @@ crux.Schema = [
     label: "Slow",
     description: "The percent of First Contentful Paint experiences >= 3 seconds.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -137,7 +147,7 @@ crux.Schema = [
     label: "Desktop",
     description: "The proportion of experiences on desktop devices.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -149,7 +159,7 @@ crux.Schema = [
     label: "Phone",
     description: "The proportion of experiences on phone devices.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -161,7 +171,7 @@ crux.Schema = [
     label: "Tablet",
     description: "The proportion of experiences on tablet devices.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -173,7 +183,7 @@ crux.Schema = [
     label: "4G",
     description: "The proportion of experiences on 4G-like connections.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -185,7 +195,7 @@ crux.Schema = [
     label: "3G",
     description: "The proportion of experiences on 3G-like connections.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -197,7 +207,7 @@ crux.Schema = [
     label: "2G",
     description: "The proportion of experiences on 2G-like connections.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -209,7 +219,7 @@ crux.Schema = [
     label: "Slow 2G",
     description: "The proportion of experiences on Slow2G-like connections.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
@@ -221,7 +231,7 @@ crux.Schema = [
     label: "Offline",
     description: "The proportion of experiences on offline connections.",
     dataType: "NUMBER",
-    defaultAggregationType: "MAX",
+    defaultAggregationType: "SUM",
     semantics: {
       conceptType: "METRIC",
       semanticType: "PERCENT",
